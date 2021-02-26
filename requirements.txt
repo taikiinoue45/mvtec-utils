@@ -1,0 +1,4 @@
+albumentations
+opencv-python-headless
+pandas
+torch
