@@ -1,0 +1,16 @@
+albumentations
+black
+blackdoc
+flake8
+hydra-core
+matplotlib
+mlflow
+mypy
+numpy
+opencv-python-headless
+pandas
+scikit-image
+scikit-learn
+scipy
+tqdm
+typing

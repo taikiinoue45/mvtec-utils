@@ -1,0 +1,15 @@
+build-essential
+ca-certificates
+cmake
+curl
+git
+libglib2.0-0
+libjpeg-dev
+libpng-dev
+openssh-server
+peco
+sshfs
+tmux
+vim
+wget
+zsh
