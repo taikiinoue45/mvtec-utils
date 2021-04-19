@@ -22,8 +22,7 @@ jobs:
 
       - name: Docker build
         run: |
-          docker build -t taikiinoue45/mvtec:latest .
-        working-directory: ./reception/func
+          docker build -t taikiinoue45/mvtec:latest -f docker/Dockerfile .
 
       - name: Docker push
         uses: actions-hub/docker@master
