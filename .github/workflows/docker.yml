@@ -22,9 +22,9 @@ jobs:
 
       - name: Docker build
         run: |
-          docker build -t taikiinoue45/mvtec:latest -f docker/Dockerfile .
+          docker build -t taikiinoue45/mvtec:base -f docker/Dockerfile .
 
       - name: Docker push
         uses: actions-hub/docker@master
         with:
-          args: push taikiinoue45/mvtec:latest
+          args: push taikiinoue45/mvtec:base
