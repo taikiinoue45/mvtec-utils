@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 
 def get_install_requires() -> List[str]:
-    return open("requirements.txt").read().splitlines()
+    return open("docker/requirements_pip.txt").read().splitlines()
 
 
 def get_readme() -> str:
@@ -13,14 +13,14 @@ def get_readme() -> str:
 
 setup(
     name="mvtec",
-    version="0.0.0",
+    version="0.0.1",
     description="Toolbox for Unsupervised Anomaly Detection on MVTec AD",
     long_description=get_readme(),
     long_description_content_type="text/markdown",
     author="taikiinoue45",
     author_email="taikiinoue45@gmail.com",
     packages=find_packages(),
-    python_requires=">=3.6",
+    python_requires="==3.6.5",
     install_requires=get_install_requires(),
     url="https://github.com/taikiinoue45/mvtec-utils",
     classifiers=["Programming Language :: Python :: 3.6"],
