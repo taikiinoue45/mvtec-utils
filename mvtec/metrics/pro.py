@@ -3,27 +3,28 @@ from statistics import mean
 import mlflow
 import numpy as np
 import pandas as pd
-from numpy import ndarray as NDArray
+from numpy import ndarray
 from skimage import measure
 from sklearn.metrics import auc
 
 
-def pro(masks: NDArray, amaps: NDArray, fpr_th: float = 0.3, num_th: int = 200) -> None:
+def compute_pro(masks: ndarray, amaps: ndarray, num_th: int = 200) -> None:
 
-    """Compute the area under the curve of per-region overlaping (PRO) and 0 to 0.3 fpr
+    """Compute the area under the curve of per-region overlaping (PRO) and 0 to 0.3 FPR
+
     Args:
-        amaps (NDArray): All anomaly maps in the test dataset. amaps.shape -> (num_test_data, h, w)
-        masks (NDArray): All binary masks in the test dataset. masks.shape -> (num_test_data, h, w)
-        num_th (int): Number of thresholds
+        masks (ndarray): All binary masks in test. masks.shape -> (num_test_data, h, w)
+        amaps (ndarray): All anomaly maps in test. amaps.shape -> (num_test_data, h, w)
+        num_th (int, optional): Number of thresholds
     """
 
-    assert isinstance(amaps, NDArray), "Type of amaps must be NDArray"
-    assert isinstance(masks, NDArray), "Type of masks must be NDArray"
+    assert isinstance(amaps, ndarray), "type(amaps) must be ndarray"
+    assert isinstance(masks, ndarray), "type(masks) must be ndarray"
     assert amaps.ndim == 3, "amaps.ndim must be 3 (num_test_data, h, w)"
     assert masks.ndim == 3, "masks.ndim must be 3 (num_test_data, h, w)"
-    assert amaps.shape == masks.shape, "Shape of amaps and masks must be same"
-    assert set(masks.flatten()) == {0, 1}, "Elements of masks must be 0 or 1"
-    assert isinstance(num_th, int), "Type of num_th must be int"
+    assert amaps.shape == masks.shape, "amaps.shape and masks.shape must be same"
+    assert set(masks.flatten()) == {0, 1}, "set(masks.flatten()) must be {0, 1}"
+    assert isinstance(num_th, int), "type(num_th) must be int"
 
     df = pd.DataFrame([], columns=["pro", "fpr", "threshold"])
     binary_amaps = np.zeros_like(amaps, dtype=np.bool)
@@ -50,18 +51,17 @@ def pro(masks: NDArray, amaps: NDArray, fpr_th: float = 0.3, num_th: int = 200) 
 
         df = df.append({"pro": mean(pros), "fpr": fpr, "threshold": th}, ignore_index=True)
 
-    # Save pro.csv
-    df.to_csv("pro.csv", index=False)
-
-    # Compute pro30
-    df = df[df["fpr"] < fpr_th]
+    # Normalize FPR from 0 ~ 1 to 0 ~ 0.3
+    df = df[df["fpr"] < 0.3]
     df["fpr"] = df["fpr"] / df["fpr"].max()
-    pro30_auc = auc(df["fpr"], df["pro"])
+    df.to_csv("pro_curve.csv", index=False)
 
-    # Logging pro30 auc to mlflow server
-    mlflow.log_metric("pro30_auc", value=pro30_auc)
+    pro_auc = auc(df["fpr"], df["pro"])
 
-    # Logging pro30 curve to mlflow server
+    # Logging pro_auc to mlflow server
+    mlflow.log_metric("pro_auc", value=pro_auc)
+
+    # Logging pro_curve to mlflow server
     # TODO(inoue): step in log_metric only accept int, so fpr is multiplied by 100 and rounded.
     for fpr, pro in zip(df["fpr"], df["pro"]):
-        mlflow.log_metric("pro30_curve", value=round(pro * 100), step=round(fpr * 100))
+        mlflow.log_metric("pro_curve", value=round(pro * 100), step=round(fpr * 100))
