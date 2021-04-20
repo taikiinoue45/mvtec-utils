@@ -3,11 +3,11 @@ import subprocess
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import ImageGrid
-from numpy import ndarray as NDArray
+from numpy import ndarray
 from tqdm import tqdm
 
 
-def savegif(imgs: NDArray, masks: NDArray, amaps: NDArray) -> None:
+def savegif(imgs: ndarray, masks: ndarray, amaps: ndarray) -> None:
 
     os.mkdir("results")
     pbar = tqdm(enumerate(zip(imgs, masks, amaps)), desc="savefig")
