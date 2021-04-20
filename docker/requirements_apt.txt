@@ -3,6 +3,8 @@ ca-certificates
 cmake
 curl
 git
+imagemagick
+libgl1-mesa-dev
 libglib2.0-0
 libjpeg-dev
 libpng-dev
@@ -10,6 +12,7 @@ openssh-server
 peco
 sshfs
 tmux
+unzip
 vim
 wget
 zsh
