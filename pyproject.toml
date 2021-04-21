@@ -19,6 +19,5 @@ exclude = '''
 
 [tool.isort]
 profile = 'black'
-src_paths = ['mvtec', 'tests']
 line_length = 99
 lines_after_imports = 2

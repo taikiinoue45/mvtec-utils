@@ -1,4 +1,4 @@
-name: docker
+name: build-image
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  docker:
-    runs-on: ubuntu-latest
+  build-image:
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
