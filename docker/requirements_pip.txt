@@ -9,6 +9,8 @@ mypy
 numpy
 opencv-python-headless
 pandas
+pytest
+pytest-cov
 scikit-image
 scikit-learn
 scipy
