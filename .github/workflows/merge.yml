@@ -18,3 +18,4 @@ jobs:
           file: docker/Dockerfile
           push: true
           tags: taikiinoue45/mvtec:base
+          
