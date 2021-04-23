@@ -7,7 +7,7 @@ from numpy import ndarray
 from tqdm import tqdm
 
 
-def savegif(imgs: ndarray, masks: ndarray, amaps: ndarray) -> None:
+def savegif(category: str, imgs: ndarray, masks: ndarray, amaps: ndarray) -> None:
 
     os.mkdir("results")
     pbar = tqdm(enumerate(zip(imgs, masks, amaps)), desc="savefig")
@@ -46,4 +46,4 @@ def savegif(imgs: ndarray, masks: ndarray, amaps: ndarray) -> None:
 
     # NOTE(inoue): The gif files converted by PIL or imageio were low-quality.
     #              So, I used ImageMagick command, instead of them.
-    subprocess.run("convert -delay 100 -loop 0 results/*.png result.gif", shell=True)
+    subprocess.run(f"convert -delay 100 -loop 0 results/*.png {category}.gif", shell=True)
