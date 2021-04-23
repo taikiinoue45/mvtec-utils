@@ -6,11 +6,12 @@ from numpy import ndarray
 from sklearn.metrics import roc_auc_score, roc_curve
 
 
-def compute_roc(y_trues: ndarray, y_preds: ndarray, stems: List[str]) -> None:
+def compute_roc(category: str, y_trues: ndarray, y_preds: ndarray, stems: List[str]) -> None:
 
     """Compute the area under the curve of receiver operating characteristic (ROC)
 
     Args:
+        category (str): Category of product
         y_trues (ndarray): All binary labels in test. y_trues.shape -> (num_test_data,)
         y_preds (ndarray): All predictions in test. y_preds.shape -> (num_test_data,)
         stems (List[str]): All image filename without suffix in test. len(stems) -> num_test_data
@@ -36,7 +37,7 @@ def compute_roc(y_trues: ndarray, y_preds: ndarray, stems: List[str]) -> None:
     # Save roc_curve.csv
     keys = [f"threshold_{i}" for i in range(len(thresholds))]
     roc_df = pd.DataFrame({"key": keys, "fpr": fprs, "tpr": tprs, "threshold": thresholds})
-    roc_df.to_csv("roc_curve.csv", index=False)
+    roc_df.to_csv(f"{category}_roc_curve.csv", index=False)
 
     # Update test_info.csv
     info_csv = pd.merge(
