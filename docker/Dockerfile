@@ -1,11 +1,11 @@
 FROM taikiinoue45/mvtec:data AS data
 FROM nvidia/cuda:10.2-cudnn7-devel-ubuntu18.04
 
-ENV DEBIAN_FRONTEND=noninteractive
-ENV LC_ALL C.UTF-8
-ENV LANG C.UTF-8
-ENV PATH /opt/conda/bin:/usr/local/cuda-10.2/bin:$PATH
-ENV LD_LIBRARY_PATH /usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
+ENV DEBIAN_FRONTEND=noninteractive \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8 \
+    PATH=/opt/conda/bin:/usr/local/cuda-10.2/bin:$PATH \
+    LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH
 COPY --from=data /data/MVTec/mvtec_anomaly_detection.tar.xz /data/MVTec/mvtec_anomaly_detection.tar.xz
 COPY . /root/mvtec-utils
 WORKDIR /root/mvtec-utils
